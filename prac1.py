@@ -5,15 +5,42 @@ class Employee:
         self.first = first
         self.last = last
         self.pay = pay
-        self.email = first + '.' + last + '@company.com'
 
         Employee.num_of_emps+=1
-
+    @property
+    def email(self):
+        return '{}.{}@email.com'.format(self.first, self.last)
+    @property
     def fullname(self):
         return '{} {}'.format(self.first, self.last)
     
+    @fullname.setter
+    def fullname(self,name):
+        first, last  = name.split(' ')
+        self.first = first
+        self.last = last
+    
+    @fullname.deleter
+    def fullname(self):
+        print('Delete Name!')
+        self.first = None
+        self.last = None
+    
     def apply_raise(self):
         self.pay = int(self.pay *self.raise_amt)
+
+    def __repr__(self):
+        return "Employee ('{}','{}','{}')".format(self.first,self.last,self.pay)
+
+    def __str__(self):
+        return '{} - {}'.format(self.fullname(),self.email)
+    
+    def __add__(self, other):
+        return self.pay + other.pay
+    
+    def __len__(self):
+        return len(self.fullname())
+        
 
     @classmethod
     def set_raise_amt(cls, amount):
@@ -85,5 +112,25 @@ mgr_1 = Manager('Sue','Smith',9000, [dev_1])
 # my_date = datetime.date(2016, 7,11)
 # print(Employee.is_workday(my_date))
 
-print(isinstance(Develpor,Employee))
-print(issubclass(Develpor,Employee))
+# print(isinstance(Develpor,Employee))
+# print(issubclass(Develpor,Employee)
+
+
+emp_1 = Employee('Muhammad','Ali',50000)
+
+emp_2  = Employee('Test','Employee',5000)
+
+emp_1.fullname = 'Cory Jong'
+print(emp_1.first)
+print(emp_1.email)
+print(emp_1.fullname)
+
+del emp_1.fullname
+
+print(emp_1.first)
+# print(emp_1)
+# print(emp_1 + emp_2)
+# print(repr(emp_1))
+# print(str(emp_1))
+
+# print(len(emp_1))
